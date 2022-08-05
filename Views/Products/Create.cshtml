@@ -1,0 +1,84 @@
+﻿@model MlVitrine.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="product_name" class="control-label">Nome do produto</label>
+                <input asp-for="product_name" class="form-control" />
+                <span asp-validation-for="product_name" class="text-danger"></span>
+                <label asp-for="product_mainimage" type="file"class="control-label">Imagem principal</label>
+                <input asp-for="product_mainimage" type="file" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="product_model" class="control-label"></label>
+                <input asp-for="product_model" class="form-control" />
+                <span asp-validation-for="product_model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_description" class="control-label"></label>
+                <input asp-for="product_description" class="form-control" />
+                <span asp-validation-for="product_description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_sku" class="control-label"></label>
+                <input asp-for="product_sku" class="form-control" />
+                <span asp-validation-for="product_sku" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_ean" class="control-label"></label>
+                <input asp-for="product_ean" class="form-control" />
+                <span asp-validation-for="product_ean" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_price" class="control-label"></label>
+                <input asp-for="product_price" class="form-control" />
+                <span asp-validation-for="product_price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_stock" class="control-label"></label>
+                <input asp-for="product_stock" class="form-control" />
+                <span asp-validation-for="product_stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandId" class="control-label"></label>
+                <select asp-for="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSpecId" class="control-label"></label>
+                <select asp-for="ProductSpecId" class ="form-control" asp-items="ViewBag.ProductSpecId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductConditionId" class="control-label"></label>
+                <select asp-for="ProductConditionId" class ="form-control" asp-items="ViewBag.ProductConditionId"></select>
+            </div>
+
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="product_active" /> @Html.DisplayNameFor(model => model.product_active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,170 @@
+﻿@model IEnumerable<MlVitrine.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<section style="background-color: #eee;">
+    <div class="text-center container py-5">
+        <h4 class="mt-4 mb-5"><strong>Produtos Ativos</strong></h4>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                            data-mdb-ripple-color="light">
+                            <a asp-action="Edit" asp-route-id="@item.ProductId">
+                            <img src="@item.product_mainimage" class="w-100" />
+                            
+                                <div class="mask">
+                                    <div class="d-flex justify-content-start align-items-end h-100">
+                                        <h5><span class="badge bg-primary ms-2"></span></h5>
+                                    </div>
+                                </div>
+                                <div class="hover-overlay">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <a href="" class="text-reset">
+                                <h5 class="card-title mb-3">@item.product_name @item.product_model @item.ProductSpec.product_attribute</h5>
+                            </a>
+                            <a href="" class="text-reset">
+                                <p>Categoria</p>
+                            </a>
+                            <h6 class="mb-3">@item.product_price.ToString("c")</h6>
+
+                            <h6 class="mb-3">Unidades disponiveis: @item.product_stock</h6>
+                        </div>
+                    </div>
+                </div>
+            }
+         </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.product_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_sku)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_ean)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrandId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductSpec)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCondition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImages[0].image_url)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_sku)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_ean)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_active)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductSpec.ProductSpecId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductCondition.ProductConditionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductImages[0].image_url)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
