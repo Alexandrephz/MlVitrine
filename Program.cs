@@ -1,9 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MlVitrine.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MlVitrineContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MlVitrineDev") ?? throw new InvalidOperationException("Connection string 'MlVitrineContext' not found.")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<MlVitrineContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,6 +28,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

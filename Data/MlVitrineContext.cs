@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MlVitrine.Models;
 
 namespace MlVitrine.Data
 {
-    public class MlVitrineContext : DbContext
+    public class MlVitrineContext : IdentityDbContext<IdentityUser>
     {
         public MlVitrineContext (DbContextOptions<MlVitrineContext> options)
             : base(options)
@@ -25,5 +27,7 @@ namespace MlVitrine.Data
         public DbSet<MlVitrine.Models.ProductSpec> ProductSpec { get; set; } = default!;
         public DbSet<MlVitrine.Models.ProductStockHistory> ProductStock { get; set; } = default!;
         public DbSet<MlVitrine.Models.ProductWorkWith> ProductWorkWith { get; set; } = default!;
+
+        public DbSet<MlVitrine.Models.MeliSession> MeliSession { get; set; } = default!;
     }
 }
