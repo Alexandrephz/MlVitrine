@@ -47,13 +47,32 @@ namespace MlVitrine.Controllers
                 {
                     Random random = new Random();
                     int status_code = random.Next(10000000, 99999999);
-                    var check_url = await new MLCreate(_context).CreateTestUser(status_code, null, user.UserName);
-                    if (string.IsNullOrEmpty(loginVM.ReturnUrl))
+                    var HaveCode = new MLCreate(_context).UserHaveCodeMeli(user.UserName);
+
+                    if (HaveCode == true)
                     {
-                        var datetime = DateTime.UtcNow;
-                        return Redirect(check_url);
+                        var HaveToken = new MLCreate(_context).UserHaveTokenMeli(user.UserName);
+                        if (HaveToken == true)
+                        {
+                            return RedirectToAction("Index", "Products");
+                        }
+                        else
+                        {
+                            var SetToken = await new MLCreate(_context).SetUserFirstRequest(status_code, user.UserName);
+                            return Redirect(SetToken);
+                            var GetCode = new MLCreate(_context).GetUserCode(user.UserName);
+                            var GetStatus = new MLCreate(_context).GetCodeStatus(GetCode);
+                            var GetToken = await new MLCreate(_context).SetUserCode(user.UserName, GetCode, GetStatus);
+                            return RedirectToAction("Index", "Products");
+                        }
                     }
-                        return Redirect(check_url);
+                    else
+                    {
+                        var SetToken = await new MLCreate(_context).SetUserFirstRequest(status_code, user.UserName);
+                        return Redirect(SetToken);
+                    }
+                    
+
                 }
             }
             ModelState.AddModelError("", "Falha ao realizar o login !!");

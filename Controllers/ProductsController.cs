@@ -36,7 +36,7 @@ namespace MlVitrine.Controllers
             {
                 var user = User.Identity.Name;
 
-                await new MLCreate(_context).CreateTestUser(state, code, user);
+                await new MLCreate(_context).SetUserCode(user, code, state);
 
                 return RedirectToAction("Index");
             }
