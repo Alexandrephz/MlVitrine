@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MlVitrine.ViewModels;
+using MlVitrine.Services;
+using MlVitrine.Data;
 
 namespace MlVitrine.Controllers
 {
@@ -9,11 +11,13 @@ namespace MlVitrine.Controllers
     {
         private readonly UserManager<IdentityUser>? _userManager;
         private readonly SignInManager<IdentityUser>? _signInManager;
+        private readonly MlVitrineContext _context;
 
-        public AccountController(UserManager<IdentityUser>? userManager, SignInManager<IdentityUser>? signInManager)
+        public AccountController(UserManager<IdentityUser>? userManager, SignInManager<IdentityUser>? signInManager, MlVitrineContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         //Get Login page
@@ -41,27 +45,27 @@ namespace MlVitrine.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                 if (result.Succeeded)
                 {
+                    Random random = new Random();
+                    int status_code = random.Next(10000000, 99999999);
+                    var check_url = await new MLCreate(_context).CreateTestUser(status_code, null, user.UserName);
                     if (string.IsNullOrEmpty(loginVM.ReturnUrl))
                     {
-                        Random random = new Random();
-                        int status_code = random.Next(10000000, 99999999);
-                        Console.WriteLine(user.Id);
-                        return RedirectToAction("Index", "Products");
+                        var datetime = DateTime.UtcNow;
+                        return Redirect(check_url);
                     }
-                        return RedirectToAction("Index", "Products");
-                    //var code = await Get("https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=7003305904370662&redirect_uri=https://localhost:7276");
+                        return Redirect(check_url);
                 }
             }
             ModelState.AddModelError("", "Falha ao realizar o login !!");
             return View(loginVM);
         }
 
-        [Authorize]
+
         public IActionResult Register()
         {
             return View();
         }
-        [Authorize]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registroVM)

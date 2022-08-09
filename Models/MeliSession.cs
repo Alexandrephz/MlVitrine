@@ -8,9 +8,11 @@
 
         public string? CodeMeli { get; set; }
 
+        public string? TokenMeli { get; set; }
+
         public string? Username { get; set; }
 
         public DateTime CreatedDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
     }
 }

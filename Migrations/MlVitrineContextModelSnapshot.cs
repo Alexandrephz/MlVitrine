@@ -234,6 +234,37 @@ namespace MlVitrine.Migrations
                     b.ToTable("Brand");
                 });
 
+            modelBuilder.Entity("MlVitrine.Models.MeliSession", b =>
+                {
+                    b.Property<int>("MeliSessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MeliSessionId"));
+
+                    b.Property<string>("CodeMeli")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("SessionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TokenMeli")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.HasKey("MeliSessionId");
+
+                    b.ToTable("MeliSession");
+                });
+
             modelBuilder.Entity("MlVitrine.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")

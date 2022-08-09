@@ -72,6 +72,7 @@ namespace MlVitrine.Migrations
             values: new object[] { 5, 3 });
             migrationBuilder.InsertData("ProductCompatibility", columns: new[] { "BrandId", "ProductId" },
             values: new object[] { 5, 3 });
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

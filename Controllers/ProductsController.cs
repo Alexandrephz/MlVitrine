@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using MlVitrine.Data;
 using MlVitrine.Models;
 using MlVitrine.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace MlVitrine.Controllers
 {
@@ -18,16 +20,26 @@ namespace MlVitrine.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly MlVitrineContext _context;
+        private readonly SignInManager<IdentityUser>? _signInManager;
 
-        public ProductsController(MlVitrineContext context, IWebHostEnvironment webHostEnvironment)
+        public ProductsController(MlVitrineContext context, IWebHostEnvironment webHostEnvironment, SignInManager<IdentityUser>? signInManager)
         {
             _context = context;
             _webHostEnvironment= webHostEnvironment;
+            _signInManager = signInManager;
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([Optional]string code, [Optional]int state)
         {
+            if (code != null || state != 0)
+            {
+                var user = User.Identity.Name;
+
+                await new MLCreate(_context).CreateTestUser(state, code, user);
+
+                return RedirectToAction("Index");
+            }
             var mlVitrineContext = _context.Product.Include(p => p.ProductCondition)
                 .Include(p => p.ProductSpec)
                 .Include(pI => pI.ProductImages)
